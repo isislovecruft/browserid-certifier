@@ -26,7 +26,7 @@ function signServerSide(email, publicKey, certDuration, callback) {
 			" while talking to browserid-certifier/cert_key!");
 	    throw {
 		name: "InvalidRequestError",
-		message: "Unexpected status code: " + requesst.status
+		message: "Unexpected status code: " + request.status
 	    };
 	}
     }
