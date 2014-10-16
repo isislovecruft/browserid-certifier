@@ -3,9 +3,15 @@
 // see https://developer.mozilla.org/en/Persona/Implementing_a_Persona_IdP
 // and https://lukasa.co.uk/2013/04/Writing_A_Persona_Identity_Provider/
 
-var signServerSide = function(email, publicKey, certDuration, callback) {
+function signServerSide(email, publicKey, certDuration, callback) {
+    // Artificially skew times into the past.
+    // Fixes issues with client clocks being slightly off.
+    var now = new Date();
+    now.setSeconds(now.getSeconds() - 120);
+    var expiration = now.valueOf() + (certDuration * 1000);
+
     var body = JSON.stringify({
-	duration: certDuration,
+	duration: expiration,
 	pubkey: publicKey,
 	email: email,
     });
