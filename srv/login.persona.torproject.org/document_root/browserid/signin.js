@@ -52,19 +52,32 @@ function authenticateEmail() {
 };
 
 function checkForNativePersonaAPI() {
+    var hasAPI = false;
+    var explain = [
+        "To use this Persona testing server, you must first navigate to",
+        "about:config and set `dom.identity.enabled` to `true`.",
+    ].join(" ");
+
     try {
-        navigator.mozId.raiseAuthenticationFailure();
+        if (navigator.mozId != null) {
+            hasAPI = true;
+        }
     } catch (e) {
-        var explain = [
-            "To use this Persona testing server, you must first navigate to",
-            "about:config and set `dom.identity.enabled` to `true`.",
-        ].join(" ");
+        if (e instanceof TypeError) {
+            hasAPI = false;
+        };
+    };
+
+    if (hasAPI === false) {
         console.log("WARNING: Native Persona API is missing; no navigator.mozId. "
                     + explain);
-        document.getElementById('alertWarnText').innerHTML = explain;
+        // Make sure we don't overwrite the button
+        var oldText = document.getElementById('alertWarnText').innerHTML;
+        document.getElementById('alertWarnText').innerHTML = explain + oldText;
         toggleVisibility('alertWarn');
         return false;
+    } else {
+        console.log("Hooray! We have navigator.mozId!");
+        return true;
     };
-    console.log("Hooray! We have navigator.mozId!");
-    return true;
 };
