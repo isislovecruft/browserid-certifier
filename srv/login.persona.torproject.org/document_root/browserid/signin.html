@@ -46,21 +46,24 @@
 
   <div class="bs-docs-section">
     <!-- Various dismissable alerts which are toggleable and hidden by default -->
-    <div class="container-fluid" id="alertBoxesTop"
-         style="align-content: left; align: left; width: 60%;">
-    <div class="row" style="display: none;" id="loginSuccess">
-      <div class="alert alert-dismissable alert-info" id="loginSuccessText">
-        <button type="button" class="close" data-dismiss="alert"
-		        onclick="toggleVisibility('loginSuccess')">×</button>
+    <div class="container-fluid" id="alertBoxesTopLoginSuccess"
+         style="align-content: left; align: left; text-align: center; width: 30%;">
+      <div class="row" style="display: none;" id="loginSuccess">
+        <div class="alert alert-dismissable alert-info" id="loginSuccessText">
+          <button type="button" class="close" data-dismiss="alert"
+	              onclick="toggleVisibility('loginSuccess')">×</button>
+        </div>
       </div>
     </div>
 
-    <div class="row" style="display: none;" id="alertWarn">
-      <div class="alert alert-dismissable alert-warning" id="alertWarnText">
-        <button type="button" class="close" data-dismiss="alert"
-		        onclick="toggleVisibility('alertWarn')">×</button>
+    <div class="container-fluid" id="alertBoxesTopWarn"
+         style="align-content: left; align: left; text-align: center; width: 75%;">
+      <div class="row" style="display: none;" id="alertWarn">
+        <div class="alert alert-dismissable alert-warning" id="alertWarnText">
+          <button type="button" class="close" data-dismiss="alert"
+                  onclick="toggleVisibility('alertWarn')">×</button>
+        </div>
       </div>
-    </div>
     </div>
 
     <!-- Left column with login choices -->
