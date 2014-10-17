@@ -30,6 +30,7 @@ function authenticateEmail() {
 
         navigator.mozId.beginAuthentication(function(email) {
             if (userHasActiveSession(email)) {
+                console.log("Client has email! Redirecting to Persona.");
                 navigator.mozId.completeAuthentication();
             } else {
                 var err = "Please enter a valid email address and try again.";
