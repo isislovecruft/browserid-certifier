@@ -33,8 +33,9 @@ function authenticateEmail() {
                 navigator.mozId.completeAuthentication();
             } else {
                 var err = "Please enter a valid email address and try again.";
-                alert(err);
-                document.getElementById('alertWarnText').innerHTML = err;
+                // Make sure we don't overwrite the button
+                var oldText = document.getElementById('alertWarnText').innerHTML;
+                document.getElementById('alertWarnText').innerHTML = err + oldText;
                 toggleVisibility('alertWarn');
             };
         });
