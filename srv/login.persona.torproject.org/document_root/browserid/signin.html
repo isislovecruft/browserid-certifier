@@ -40,7 +40,7 @@ function authenticateEmail() {
             } else {
                 var err = "Please enter a valid email address and try again.";
                 alert(err);
-            //document.getElementById('error').innerHTML = err;
+                document.getElementById('alertWarnText').innerHTML = err;
             };
         });
         console.log("Finished beginAuthentication() callback.");
