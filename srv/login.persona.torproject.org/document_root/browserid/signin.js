@@ -35,6 +35,7 @@ function authenticateEmail() {
                 var err = "Please enter a valid email address and try again.";
                 alert(err);
                 document.getElementById('alertWarnText').innerHTML = err;
+                toggleVisibility('alertWarnText');
             };
         });
         console.log("Finished beginAuthentication() callback.");
@@ -46,6 +47,7 @@ function authenticateEmail() {
     var sm = "Login successful!";
     console.log(sm);
     document.getElementById('loginSuccessText').innerHTML = sm;
+    toggleVisibility('loginSuccessText');
 };
 
 function checkForNativePersonaAPI() {
@@ -56,9 +58,10 @@ function checkForNativePersonaAPI() {
             "To use this Persona testing server, you must first navigate to",
             "about:config and set `dom.identity.enabled` to `true`.",
         ].join(" ");
-        console.log("WARNING: Native Persona API is missing; no navigator.mozId.");
-        console.log(explain);
+        console.log("WARNING: Native Persona API is missing; no navigator.mozId. "
+                    + explain);
         document.getElementById('alertWarnText').innerHTML = explain;
+        toggleVisibility('alertWarnText');
         return false;
     };
     console.log("Hooray! We have navigator.mozId!");
