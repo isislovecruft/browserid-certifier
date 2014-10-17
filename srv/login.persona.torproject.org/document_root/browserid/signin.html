@@ -57,10 +57,13 @@ function checkForNativePersonaAPI() {
     try {
         navigator.mozId.raiseAuthenticationFailure();
     } catch (e) {
-        console.log("WARNING: Native Persona API is missing; no navigator.mozId.")
-        document.getElementById('alertWarnText').innerHTML = "To use this
-            Persona testing server, you must first navigate to about:config
-            and set `dom.identity.enabled` to `true`.";
+        var explain = [
+            "To use this Persona testing server, you must first navigate to ",
+            "about:config and set `dom.identity.enabled` to `true`."
+        ].join();
+        console.log("WARNING: Native Persona API is missing; no navigator.mozId.");
+        console.log(explain);
+        document.getElementById('alertWarnText').innerHTML = explain;
         return false;
     };
     console.log("Hooray! We have navigator.mozId!");
