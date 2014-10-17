@@ -32,25 +32,27 @@ function authenticateEmail() {
             console.log("Starting beginAuthentication() callback...");
             if (userHasActiveSession(email)) {
                 console.log("Client has email! Redirecting to Persona.");
-                navigator.mozId.completeAuthentication();
+                navigator.mozId.completeAuthentication(
+                  function() {
+                    var sm = "Login successful!";
+                    var oldText = document.getElementById('loginSuccessText').innerHTML
+                    document.getElementById('loginSuccessText').innerHTML = sm + oldText;
+                    toggleVisibility('loginSuccess');
+                  });
             } else {
-                var err = "Please enter a valid email address and try again.";
-                // Make sure we don't overwrite the button
-                var oldText = document.getElementById('alertWarnText').innerHTML;
-                document.getElementById('alertWarnText').innerHTML = err + oldText;
-                toggleVisibility('alertWarn');
+                throw "Please enter a valid email address and try again.";
             };
         });
         console.log("Finished beginAuthentication() callback.");
 
     } catch (e) {
         console.log(e + ": " + e.stack);
+        // Make sure we don't overwrite the button
+        var oldText = document.getElementById('alertWarnText').innerHTML;
+        document.getElementById('alertWarnText').innerHTML = e + oldText;
+        toggleVisibility('alertWarn');
     };
 
-    var sm = "Login successful!";
-    var oldText = document.getElementById('loginSuccessText').innerHTML
-    document.getElementById('loginSuccessText').innerHTML = sm + oldText;
-    toggleVisibility('loginSuccess');
 };
 
 function checkForNativePersonaAPI() {
