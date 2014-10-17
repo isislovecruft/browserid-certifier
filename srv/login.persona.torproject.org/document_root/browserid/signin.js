@@ -47,8 +47,8 @@ function authenticateEmail() {
     };
 
     var sm = "Login successful!";
-    console.log(sm);
-    document.getElementById('loginSuccessText').innerHTML = sm;
+    var oldText = document.getElementById('loginSuccessText').innerHTML
+    document.getElementById('loginSuccessText').innerHTML = sm + oldText;
     toggleVisibility('loginSuccess');
 };
 
