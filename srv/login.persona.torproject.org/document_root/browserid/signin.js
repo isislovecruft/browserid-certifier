@@ -35,7 +35,7 @@ function authenticateEmail() {
                 var err = "Please enter a valid email address and try again.";
                 alert(err);
                 document.getElementById('alertWarnText').innerHTML = err;
-                toggleVisibility('alertWarnText');
+                toggleVisibility('alertWarn');
             };
         });
         console.log("Finished beginAuthentication() callback.");
@@ -47,7 +47,7 @@ function authenticateEmail() {
     var sm = "Login successful!";
     console.log(sm);
     document.getElementById('loginSuccessText').innerHTML = sm;
-    toggleVisibility('loginSuccessText');
+    toggleVisibility('loginSuccess');
 };
 
 function checkForNativePersonaAPI() {
@@ -61,7 +61,7 @@ function checkForNativePersonaAPI() {
         console.log("WARNING: Native Persona API is missing; no navigator.mozId. "
                     + explain);
         document.getElementById('alertWarnText').innerHTML = explain;
-        toggleVisibility('alertWarnText');
+        toggleVisibility('alertWarn');
         return false;
     };
     console.log("Hooray! We have navigator.mozId!");
