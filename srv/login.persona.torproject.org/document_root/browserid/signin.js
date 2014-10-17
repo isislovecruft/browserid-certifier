@@ -9,9 +9,21 @@ function toggleVisibility(id) {
 };
 
 function userHasActiveSession(email) {
-    if (email) {
+    if (document.cookie.replace(
+            /(?:(?:^|.*;\s*)loggedin\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+        console.log("Client wasn't logged in...");
+        if (email) {
+            console.log("...but they did give an email address.");
+            document.cookie = "someCookieName=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+            return true;
+        } else {
+            console.log("...and they didn't give an email address. Skipping");
+            return false;
+        };
+    } else {
+        console.log("Client was already logged in.");
         return true;
-    };
+    }
     return false;
 };
 
@@ -52,7 +64,6 @@ function authenticateEmail() {
         document.getElementById('alertWarnText').innerHTML = e + oldText;
         toggleVisibility('alertWarn');
     };
-
 };
 
 function checkForNativePersonaAPI() {
