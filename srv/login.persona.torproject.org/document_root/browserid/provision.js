@@ -3,7 +3,7 @@
 // see https://developer.mozilla.org/en/Persona/Implementing_a_Persona_IdP
 // and https://lukasa.co.uk/2013/04/Writing_A_Persona_Identity_Provider/
 
-function signServerSide(email, publicKey, certDuration, callback) {
+function signServerSideRestful(email, publicKey, certDuration, callback) {
     // Artificially skew times into the past.
     // Fixes issues with client clocks being slightly off.
     var now = new Date();
@@ -37,6 +37,30 @@ function signServerSide(email, publicKey, certDuration, callback) {
     request.send(body);
 };
 
+function signServerSide(email, publicKey, certDuration, callback) {
+  var jwcrypto = require('jwcrypto');
+
+  var publicKey = jwcrypto.loadPublicKey('../../private/key.publickey');
+  var secretKey = jwcrypto.loadSecretKey('../../private/key.secretkey');
+  var expiration = new Date();
+  var iat = new Date();
+
+  expiration.setTime(expiration.valueOf() + (86400000 * 1000));
+  // Set issuedAt to 10 seconds ago to pad for verifier clock skew.
+  iat.setTime(iat.valueOf() - (10 * 1000));
+
+  // NOTE: DO NOT EVER USE A STATIC SEED FOR A RANDOM NUMBER GENERATOR
+  // Seed the RNG for browsers without window.crypto.getRandomValues
+  // https://developer.mozilla.org/en-US/docs/DOM/window.crypto.getRandomValues
+  jwcrypto.addEntropy("High-security random data.");
+  jwcrypto.cert.sign(
+    {publicKey: publicKey, principal: {email: email}},
+    {issuer: window.location.host, issuedAt: iat.valueOf(), expiresAt: expiration},
+    {},
+    secretKey,
+    callback(signedObject)
+  );
+};
 
 navigator.mozId.beginProvisioning(function(email, certDuration) {
     //if (!email) {
