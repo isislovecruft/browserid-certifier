@@ -29,6 +29,7 @@ function authenticateEmail() {
         console.log("Got password: " + passwd);
 
         navigator.mozId.beginAuthentication(function(email) {
+            console.log("Starting beginAuthentication() callback...");
             if (userHasActiveSession(email)) {
                 console.log("Client has email! Redirecting to Persona.");
                 navigator.mozId.completeAuthentication();
