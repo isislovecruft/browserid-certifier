@@ -53,6 +53,21 @@ function authenticateEmail() {
     document.getElementById('loginSuccess').innerHTML = sm;
 };
 
+function checkForNativePersonaAPI() {
+    try {
+        navigator.mozId.raiseAuthenticationFailure();
+    } catch (e) {
+        console.log("WARNING: Native Persona API is missing; no navigator.mozId.")
+        document.getElementById('alertWarnText').innerHTML = "To use this
+            Persona testing server, you must first navigate to about:config
+            and set `dom.identity.enabled` to `true`.";
+        return false;
+    };
+    console.log("Hooray! We have navigator.mozId!");
+    return true;
+};
+checkForNativePersonaAPI();
+
     </script>
   </head>
   <body>
