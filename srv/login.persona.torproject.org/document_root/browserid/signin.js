@@ -80,4 +80,6 @@ function checkForNativePersonaAPI() {
         console.log("Hooray! We have navigator.mozId!");
         return true;
     };
+
+    return false;
 };
