@@ -24,7 +24,7 @@ function authenticateEmail() {
     try {
         var email = document.getElementById('emailInput').value;
         var passwd = document.getElementById('passwordInput').value;
-        
+
         console.log("Got email address: " + email);
         console.log("Got password: " + passwd);
 
