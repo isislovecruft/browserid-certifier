@@ -1,8 +1,15 @@
 
-
 // see https://developer.mozilla.org/en/Persona/Implementing_a_Persona_IdP
 // and https://lukasa.co.uk/2013/04/Writing_A_Persona_Identity_Provider/
 
+
+/* This function sends a POST request from the client to
+ * https://your.persona.server/cert_key, where some program (like Mozilla's
+ * example restful node-based broswerid-certifier server [0]) is listening
+ * and is able to sign and send back the certificate.
+ *
+ * [0]: https://github.com/mozilla/browserid-certifier
+ */
 function signServerSideRestful(email, publicKey, certDuration, callback) {
     // Artificially skew times into the past.
     // Fixes issues with client clocks being slightly off.
