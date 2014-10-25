@@ -37,11 +37,17 @@ function signServerSideRestful(email, publicKey, certDuration, callback) {
     request.send(body);
 };
 
-function signServerSide(email, publicKey, certDuration, callback) {
+/* DON'T EVER USE THIS FUNCTION ON A PRODUCTION MACHINE.
+ *
+ * This function signs a certificate, client-side, using the server's private
+ * key, which is public in this case because it's a testing server. YOU SHOULD
+ * NEVER PUBLISH YOUR PRIVATE KEYS, EVER.
+ */
+function signClientSide(email, publicKey, certDuration, callback) {
   var jwcrypto = require('jwcrypto');
 
-  var publicKey = jwcrypto.loadPublicKey('../../private/key.publickey');
-  var secretKey = jwcrypto.loadSecretKey('../../private/key.secretkey');
+  var publicKey = jwcrypto.loadPublicKey(window.location.host, '/var/key.publickey');
+  var secretKey = jwcrypto.loadSecretKey(window.location.host, '/var/key.secretkey');
   var expiration = new Date();
   var iat = new Date();
 
@@ -71,7 +77,7 @@ navigator.mozId.beginProvisioning(function(email, certDuration) {
     // we just always pretend they are authenticated
     navigator.mozId.genKeyPair(function(publicKey) {
 	try {
-	    signServerSide(email, publicKey, certDuration, function(certificate) {
+	    signClientSide(email, publicKey, certDuration, function(certificate) {
 		//navigator.mozId.requestCertificate(certificate);
 		navigator.mozId.registerCertificate(certificate);
 	    });
